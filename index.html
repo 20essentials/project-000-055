@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fallen Green Pigs</title>
+  <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <script>
+    console.log("Background Reference", "https://pbs.twimg.com/media/GD46qNoWwAAZxgC.jpg:large");
+    console.log("Onmousemove Inspiration", "https://youtu.be/v_A80A76NAs?si=MSsQmpv20GzbU3gu");
+
+    const d = document;
+    let prevMouseX = null,
+      prevMouseY = null;
+
+    function putHearts(e) {
+      if (prevMouseX !== null && prevMouseY !== null) {
+        let deltaX = e.pageX - prevMouseX,
+          deltaY = e.pageY - prevMouseY,
+          distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+        if (distance >= 100) {
+          createHearts(e.pageX, e.pageY);
+          prevMouseX = e.pageX;
+          prevMouseY = e.pageY;
+        }
+      }
+      else {
+        createHearts(e.pageX, e.pageY);
+        prevMouseX = e.pageX;
+        prevMouseY = e.pageY;
+      }
+    }
+
+    function createHearts(x, y) {
+      let frame = d.createElement("i");
+      frame.style.left = x + "px";
+      frame.style.top = y + "px";
+      frame.style.scale = `${Math.random() * 2 + 1}`;
+
+      let getRandomY = () => {
+        return `${Math.random() * 400}px`;
+      }
+
+      frame.style.setProperty("--y", getRandomY());
+      d.body.appendChild(frame);
+      setTimeout(() => d.body.removeChild(frame), 2000);
+    }
+
+    d.addEventListener("mousemove", e => {
+      putHearts(e);
+    });
+  </script>
+</body>
+
+</html>
